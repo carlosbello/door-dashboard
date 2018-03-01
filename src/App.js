@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import RoomList from './components/RoomList';
 
-const FAKE_API_ENDPOINT = 'http://www.mocky.io/v2/5a9837eb2e000072005532a5?mocky-delay=500ms';
+const FAKE_API_ENDPOINT = 'https://www.mocky.io/v2/5a9837eb2e000072005532a5?mocky-delay=500ms';
 
 class App extends Component {
     constructor(props) {
