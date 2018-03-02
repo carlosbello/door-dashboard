@@ -8,7 +8,7 @@ export const IconWcFree = (props) => (
     </SvgIcon>
 );
 
-export const IconWcBussy = (props) => (
+export const IconWcBusy = (props) => (
     <SvgIcon color={red500} {...props}>
         <g transform="translate(2.000000, 0.000000)" fill-rule="nonzero">
             <circle id="XMLID_71_" cx="8.68323478" cy="1.67276522" r="1.67231304"></circle>
