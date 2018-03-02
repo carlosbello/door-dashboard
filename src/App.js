@@ -1,9 +1,20 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
 import RoomList from './components/RoomList';
+import IconButton from 'material-ui/IconButton';
+import NotificationWc from 'material-ui/svg-icons/notification/wc';
+import SyncButton from './components/SyncButton'
+import {white} from 'material-ui/styles/colors'
 
-const FAKE_API_ENDPOINT = 'https://www.mocky.io/v2/5a9837eb2e000072005532a5?mocky-delay=500ms';
+const ROOMS_INFO_API = 'https://desolate-taiga-74953.herokuapp.com/api/doorDashboard';
+
+const mapToLocalStatus = (status = []) =>
+    status.map(({roomId = 'Toilet', status = 'in_maintenance', wcList = []}) => ({
+        name: roomId,
+        isOpen: status === 'allowed',
+        doors: wcList.map(({status = 'closed'}) => ({isOpen: status === 'open'}))
+    }));
 
 class App extends Component {
     constructor(props) {
@@ -40,8 +51,9 @@ class App extends Component {
             ...state,
             isLoading: true,
         }));
-        fetch(FAKE_API_ENDPOINT)
+        fetch(ROOMS_INFO_API)
             .then(res => res.json())
+            .then(json => mapToLocalStatus(json))
             .then(
                 result =>  this.updateWithDataRetrieved(result),
                 error => this.updateWithError(error)
@@ -71,25 +83,29 @@ class App extends Component {
     render() {
         const {error, isLoading, rooms, autoUpdate} = this.state;
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h1 className="App-title">Get shit done</h1>
-                </header>
-                <section>
-                    <button onClick={() => this.switchAutoUpdate()}>
-                        {isLoading ? "Loading..." : `Autoupdate ${autoUpdate ? 'ON' : 'OFF'}`}
-                    </button>
+            <MuiThemeProvider>
+                <div>
+                    <AppBar
+                        title="Get shit done"
+                        iconElementLeft={<IconButton><NotificationWc /></IconButton>}
+                        iconElementRight={
+                            <SyncButton
+                                onClick={() => this.switchAutoUpdate()}
+                                autoUpdate={autoUpdate}
+                                isLoading={isLoading}
+                                color={white}
+                            />
+                        }
+                    />
+                    <div className="App-intro">
+                        {error
+                            ? error
+                            : <RoomList rooms={rooms}/>
+                        }
 
-                </section>
-                <div className="App-intro">
-                    {error
-                        ? error
-                        : <RoomList rooms={rooms}/>
-                    }
-
+                    </div>
                 </div>
-            </div>
+            </MuiThemeProvider>
         );
     }
 }
