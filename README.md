@@ -13,6 +13,6 @@ Hack me up 33 project to manage the doors information from the bathrooms around 
 
 ## Tech stack
  
-* Arduino
-* React
-* PHP
+* Arduino (source and diagram at [arduino-door-checker](./arduino-door-checker))
+* React (this repo)
+* PHP (back-end source at [edufacio/doorDashboard](https://github.com/edufacio/doorDashboard))
