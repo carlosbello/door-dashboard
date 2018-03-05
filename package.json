@@ -2,7 +2,7 @@
   "name": "door-dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://tuenti.github.io/door-dashboard",
+  "homepage": "https://carlosbello.github.io/door-dashboard",
   "dependencies": {
     "gh-pages": "^1.1.0",
     "material-ui": "^0.20.0",
